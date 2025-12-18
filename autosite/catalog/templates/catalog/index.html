@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OOSHKOPIR AVTO MARKET</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'catalog/style.css' %}">
+
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">OOSHKOPIR AVTO MARKET</div>
+    <nav>
+      <a href="#">Главная</a>
+      <a href="#">Каталог</a>
+      <a href="#">О нас</a>
+      <a href="#">Контакты</a>
+      <a class="phone" href="tel:+73000000000">+7 (300) 000-00-00</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Большой выбор автомобилей</h1>
+      <p>Наш автосалон предлагает более 200 автомобилей с пробегом по доступным ценам</p>
+      <button>Посмотреть каталог</button>
+    </div>
+    <div class="hero-img">
+      <img src="{% static 'images/herocar.png' %}" alt="авто">
+    </div>
+  </section>
+
+  <!-- CATALOG -->
+  <section class="catalog_1">
+    <h2>Каталог</h2>
+    <div class="custom-select">
+        <div class="select-selected">Марка</div>
+        <div class="select-items select-hide">
+            <div>Марка</div>
+            <div>BMW</div>
+            <div>Mercedes</div>
+            <div>Toyota</div>
+        </div>
+    </div>
+    <div class="catalog">
+        {% for auto in autos %}
+        <div class="card">
+          <img src="{{ auto.image.url }}" alt="{{ auto.brand }} {{ auto.name }}">
+          <div class="card-content">
+            <h3>{{ auto.brand }} {{ auto.name }}</h3>
+            <p>Год: {{ auto.year }}</p>
+            <p>Пробег: {{ auto.mileage }} км</p>
+            <div class="price">${{ auto.price }}</div>
+            <a href="#" class="card-btn">Подробнее</a>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+  </section>
+<script>
+  document.querySelectorAll(".custom-select").forEach(select => {
+    let selected = select.querySelector(".select-selected");
+    let items = select.querySelector(".select-items");
+
+    selected.addEventListener("click", () => {
+        items.classList.toggle("select-hide");
+        selected.classList.toggle("active");
+    });
+    items.querySelectorAll("div").forEach(option => {
+        option.addEventListener("click", () => {
+            selected.textContent = option.textContent;
+            items.classList.add("select-hide");
+        });
+    });
+});
+document.addEventListener("click", (e) => {
+    if (!e.target.closest(".custom-select")) {
+        document.querySelectorAll(".select-items").forEach(item => {
+            item.classList.add("select-hide");
+        });
+    }
+});
+</script>
+</body>
+</html>
