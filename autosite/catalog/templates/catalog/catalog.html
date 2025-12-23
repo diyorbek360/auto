@@ -1,0 +1,21 @@
+<div class="cards">
+  {% for car in cars %}
+<<<<<<< HEAD
+    <div class="card">
+      <img src="{{ car.image.url }}" alt="{{ car.name }}">
+      <h3>{{ car.brand }} {{ car.name }}</h3>
+      <p>{{ car.year }} г.</p>
+      <p>Пробег: {{ car.mileage }} км</p>
+      <p><b>{{ car.price }} ₹</b></p>
+    </div>
+=======
+  <div class="card">
+      <img src="{{ car.image.url }}" alt="">
+      <h3>{{ car.brand }} {{ car.model }}</h3>
+      <p>{{ car.year }} г.</p>
+      <p>Пробег: {{ car.mileage }} км</p>
+      <p><b>{{ car.price }} ₽</b></p>
+  </div>
+>>>>>>> 5ca6d7ac49fd4e923175c2b31c65329d161147aa
+  {% endfor %}
+</div>
