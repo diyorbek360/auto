@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechZone — Premium Gaming & Tech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #ff6b35; --accent-dark: #e65100; --accent-glow: rgba(255,107,53,0.35);
+      --gradient: linear-gradient(135deg, #ff6b35 0%, #ff4500 100%);
+      --bg: #f9fafb; --surface: rgba(255,255,255,0.94); --dark-bg: #0f172a;
+      --text: #0f172a; --text-light: #64748b; --border: rgba(226,232,240,0.75);
+      --radius-lg: 24px; --radius: 16px; --shadow-sm: 0 6px 20px -4px rgba(0,0,0,0.07);
+      --shadow-md: 0 20px 50px -10px var(--accent-glow);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+    header { position: sticky; top: 0; z-index: 1000; background: var(--surface); backdrop-filter: blur(16px) saturate(180%); border-bottom: 1px solid var(--border); }
+    .nav-bar { display: flex; align-items: center; height: 80px; gap: 24px; }
+    .logo { font-size: 2.1rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; }
+    .search-box { flex: 1; max-width: 540px; position: relative; }
+    .search-box input { width: 100%; padding: 12px 16px 12px 48px; background: rgba(241,245,249,0.7); border: 1px solid var(--border); border-radius: var(--radius); font-size: 15px; transition: 0.4s; outline: none; }
+    .search-box input:focus { background: white; border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-glow); transform: scale(1.02); }
+    .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-light); }
+    .nav-actions { display: flex; gap: 28px; font-size: 1.4rem; }
+    .nav-actions a { color: var(--text); transition: 0.3s; cursor: pointer; position: relative; text-decoration: none; }
+    .nav-actions a:hover { color: var(--accent); transform: scale(1.15); }
+    .badge { position: absolute; top: -10px; right: -20px; background: var(--gradient); color: white; font-size: 10px; padding: 3px 7px; border-radius: 50%; min-width: 20px; text-align: center; }
+    .main-nav { background: #ff5722; padding: 12px 0; }
+    .main-nav ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; list-style: none; }
+    .main-nav a { color: white; text-decoration: none; font-weight: 600; padding: 8px 16px; border-radius: 8px; transition: 0.3s; }
+    .main-nav a:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
+    .hero { padding: 100px 0 140px; }
+    .hero-card { background: var(--dark-bg); color: white; border-radius: var(--radius-lg); padding: 64px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; position: relative; overflow: hidden; box-shadow: var(--shadow-md); }
+    .hero-card::before { content: ''; position: absolute; top: -140px; right: -140px; width: 480px; height: 480px; background: var(--accent); filter: blur(160px); opacity: 0.28; }
+    .hero-text h1 { font-size: clamp(2.8rem, 7vw, 4.5rem); font-weight: 800; line-height: 1.05; margin-bottom: 1.2rem; }
+    .hero-text p { font-size: 1.2rem; color: #cbd5e1; margin-bottom: 2.4rem; max-width: 520px; }
+    .cta {margin-bottom: 30px; display: inline-block; padding: 16px 44px; background: var(--gradient); color: white; font-weight: 700; border-radius: var(--radius); text-decoration: none; box-shadow: 0 12px 28px rgba(255,107,53,0.38); transition: 0.4s; }
+    .cta:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 25px 55px rgba(255,107,53,0.55); }
+    .hero-img img { width: 100%; border-radius: var(--radius); box-shadow: 0 24px 64px rgba(0,0,0,0.45); }
+    .section-title { font-size: 2.2rem; font-weight: 700; margin: 80px 0 40px; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; margin-bottom: 40px; }
+    .cat-card { background: white; border-radius: var(--radius); padding: 32px 20px; text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow-sm); cursor: pointer; }
+    .cat-card i { font-size: 2.6rem; color: var(--accent); margin-bottom: 16px; }
+    .brands-section { margin: 40px 0 100px; }
+    .brands-title { font-size: 1.9rem; font-weight: 700; margin-bottom: 30px; text-align: center; }
+    .brands-carousel { display: flex; overflow: hidden; position: relative; padding: 20px 0; }
+    .carousel-track { display: flex; animation: scroll 35s linear infinite; }
+    .carousel-track:hover { animation-play-state: paused; }
+    .brand-logo { flex: 0 0 auto; width: 140px; height: 140px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); margin: 0 30px; cursor: pointer; transition: 0.4s; overflow: hidden; border: 2px solid transparent; }
+    .brand-logo img { width: 80%; height: 80%; object-fit: contain; transition: 0.5s; }
+    .brand-logo:hover { transform: translateY(-12px) scale(1.12); border-color: var(--accent); box-shadow: var(--shadow-md); }
+    .brand-logo:hover img { transform: scale(1.18); }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    footer { background: var(--dark-bg); color: #cbd5e1; padding: 80px 0 40px; text-align: center; }
+    footer .logo { font-size: 2.4rem; margin-bottom: 1.6rem; }
+    .social { margin-top: 32px; }
+    .social i { font-size: 1.7rem; margin: 0 16px; cursor: pointer; transition: 0.4s; }
+    .social i:hover { color: var(--accent); transform: scale(1.3) rotate(15deg); }
+    @media (max-width: 1024px) { .hero-card { grid-template-columns: 1fr; text-align: center; } .hero-img { display: none; } }
+    @media (max-width: 768px) { .nav-bar { flex-direction: column; height: auto; padding: 16px 0; } .search-box { max-width: 100%; } .brand-logo { width: 110px; height: 110px; margin: 0 15px; } }
+.product-grid {display: grid;grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));gap: 24px;padding: 20px;}
+.product-card {background: white;border-radius: 16px;overflow: hidden;box-shadow: 0 4px 12px rgba(0,0,0,0.08);transition: all 0.25s ease;border: 1px solid #eee;}
+.product-card:hover {transform: translateY(-8px);box-shadow: 0 12px 32px rgba(0,0,0,0.12);border-color: #ddd;}
+.product-image {position: relative;height: 240px;background: #f8f9fa;display: flex;align-items: center;justify-content: center;padding: 20px;}
+.product-image img {max-height: 100%;max-width: 100%;object-fit: contain;}
+.discount {position: absolute;top: 12px;left: 12px;background: #e53935;color: white;font-weight: bold;padding: 6px 12px;border-radius: 20px;font-size: 0.9rem;}
+.product-info {padding: 16px 20px;}
+.product-title {font-size: 1.1rem;margin: 0 0 10px;height: 2.6em;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}
+.product-price {margin: 12px 0;font-size: 1.4rem;font-weight: bold;}
+.current-price { color: #000; }
+.old-price {color: #888;text-decoration: line-through;font-size: 1.05rem;margin-left: 12px;}
+.product-desc {color: #666;font-size: 0.92rem;margin: 12px 0 16px;line-height: 1.4;height: 4.2em;overflow: hidden;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;}
+.product-actions {display: flex;gap: 12px;}
+.btn-cart {flex: 1;text-decoration: none; background: rgba(255,107,53);color: white;border: none;padding: 12px;border-radius: 10px;font-weight: 600;cursor: pointer;}
+.btn-cart:hover { background: #222; }
+.btn-quick {background: #f0f0f0;border: none;padding: 12px 16px;border-radius: 10px;cursor: pointer;}
+.product-card {width: 330px;background: white;border-radius: 12px;overflow: hidden;box-shadow: 0 4px 12px rgba(0,0,0,0.08);transition: transform 0.2s, box-shadow 0.2s;position: relative;cursor: pointer;padding-bottom: 10px;}
+.product-card:hover {transform: translateY(-6px);box-shadow: 0 12px 24px rgba(0,0,0,0.12);}
+.image-container {position: relative;height: 280px;background: #f8f8f8;display: flex;align-items: center;justify-content: center;}
+.image-container img {max-width: 90%;max-height: 90%;object-fit: contain;}
+
+.product-title {font-size: 15px;line-height: 1.4;margin: 0 0 8px;color: #222;display: -webkit-box;-webkit-line-clamp: 2; /* Количество строк, которые нужно оставить */-webkit-box-orient: vertical;overflow: hidden;height: auto; /* Убираем жесткие 42px */}
+.price-block {display: flex;flex-direction: column;margin: 8px 0;}
+.old-price {font-size: 13px;color: #999;text-decoration: line-through;}
+.current-price {font-size: 20px;font-weight: bold;color: #222;}
+.installment {font-size: 13px;color: #7000ff;margin-top: 4px;}
+.rating {font-size: 13px;color: #f5a623;margin: 8px 0;}
+.rating span {color: #666;margin-left: 4px;}
+.add-to-cart {background: #ff5722;color: white;border: none;padding: 10px;border-radius: 10px;font-weight: 600;margin-top: -2px;cursor: pointer;opacity: 1;transform: translateY(10px);transition: all 0.3s;}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  grid-template-rows: repeat(2, auto);   
+  gap: 24px;
+  justify-items: center;
+  padding: 20px 0;
+}
+
+@media (max-width: 600px) {
+  body { padding: 20px; }
+  .product-card { width: 100%; max-width: 320px; }
+}
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav-bar">
+    <div class="logo">TECHZONE</div>
+    <div class="search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input type="search" placeholder="Mahsulot, brend yoki model qidirish...">
+    </div>
+    <div class="nav-actions">
+      <a href="#"><i class="far fa-user"></i></a>
+      <a id="cart-toggle"><i class="fas fa-bag-shopping"></i><span class="badge">0</span></a>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <ul class="container">
+      <li><a href="#">Bosh sahifa</a></li>
+      <li><a href="#">Kompyuterlar</a></li>
+      <li><a href="#">Ichki jihozlar</a></li>
+      <li><a href="#">Klaviaturalar</a></li>
+      <li><a href="#">Sichqonchalar</a></li>
+      <li><a href="#">Monitorlar</a></li>
+      <li><a href="#">Kreslolar</a></li>
+      <li><a href="#">Stollar</a></li>
+    </ul>
+  </nav>
+</header>
+<main class="container">
+  <section class="hero">
+    <div class="hero-card">
+      <div class="hero-text">
+        <h1>Eng kuchli gaming va pro texnikalar</h1>
+        <p>RTX 40 / 50 seriyasi, Ryzen 9000, Intel Core Ultra и premium aksessuarlar — hozir eng yaxshi narxlarda.</p>
+        <a href="catalog.html" class="cta">Katalogni ochish</a>
+      </div>
+      <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1614624532983-4ce03382d63d?auto=format&fit=crop&w=1200&q=80" alt="Hero">
+      </div>
+    </div>
+  </section>
+    <h2 class="section-title">Kategoriyalar</h2>
+    <div class="cat-grid">
+      {% for cat in categories %}
+        <div class="cat-card">
+          <i class="fas fa-microchip"></i> <h3>{{ cat.name }}</h3>
+        </div>
+      {% empty %}
+        <p>Hozircha kategoriyalar mavjud emas.</p>
+      {% endfor %}
+    </div>
+  <section class="brands-section">
+    <h2 class="brands-title">Mashhur brendlar</h2>
+    <div class="brands-carousel">
+      <div class="carousel-track">
+        <div class="brand-logo"><img src="https://images.seeklogo.com/logo-png/50/1/logitech-g-logo-png_seeklogo-501218.png"></div>
+        <div class="brand-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/ASUS_Logo.svg/1200px-ASUS_Logo.svg.png"></div>
+        <div class="brand-logo"><img src="https://images.seeklogo.com/logo-png/42/2/hyperx-logo-png_seeklogo-425410.png"></div>
+        <div class="brand-logo"><img src="https://iconape.com/wp-content/png_logo_vector/ryzen.png"></div>
+        <div class="brand-logo"><img src="https://images.seeklogo.com/logo-png/50/1/logitech-g-logo-png_seeklogo-501218.png"></div>
+        <div class="brand-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/ASUS_Logo.svg/1200px-ASUS_Logo.svg.png"></div>
+        <div class="brand-logo"><img src="https://images.seeklogo.com/logo-png/42/2/hyperx-logo-png_seeklogo-425410.png"></div>
+      </div>
+    </div>
+  </section>
+<section class="recommendations">
+  <h2 class="section-title">tavsiya qilamiz</h2>
+  <div class="product-grid">
+    {% for product in products|slice:":6" %}  <!-- показываем только первые 6 -->
+      <div class="product-card">
+        <div class="product-image">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}">
+          {% if product.tag %}
+            <span class="discount">{{ product.tag }}%</span>
+          {% endif %}
+        </div>
+        
+        <div class="product-info">
+          <h3 class="product-title">{{ product.brand }} {{ product.name }}</h3>
+          <div class="product-price">
+            <span class="current-price">{{ product.price }} сум</span>
+          </div>
+          <div class="product-actions">
+            <a href="{% url 'product_detail' product.pk %}" class="btn-cart">
+              Batafsil
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div style="text-align: center; margin-top: 40px;">
+    <a href="{% url 'catalog' %}" class="cta">Koʻproq koʻrish</a>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="container">
+    <div class="logo">TECHZONE</div>
+    <p>Toshkent sh., Yunusobod tumani<br>+998 90 123 45 67 • info@techzone.uz</p>
+    <div class="social"><i class="fab fa-instagram"></i><i class="fab fa-telegram"></i><i class="fab fa-youtube"></i></div>
+  </div>
+</footer>
+</body>
+</html> 
