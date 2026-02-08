@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Product, Category # Проверь, что Category импортирован
 from django.db.models import Min, Max, Q
 
-
+x = 1
 def index_view(request):
     products = Product.objects.all()[:6]
     categories = Category.objects.all()
