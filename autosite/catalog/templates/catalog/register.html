@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ro'yxatdan o'tish — TechZone</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #ff6b35; --accent-glow: rgba(255,107,53,0.18);
+      --gradient: linear-gradient(135deg, #ff6b35, #ff4500);
+      --bg: #f1f5f9; --surface: #fff; --border: #e2e8f0;
+      --text: #0f172a; --text-light: #64748b; --radius: 12px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; }
+    header { background: #0f172a; padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 1.8rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+    .back-link { color: #94a3b8; font-size: 14px; text-decoration: none; }
+    .back-link:hover { color: white; }
+    .page-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px; }
+    .card { background: var(--surface); border-radius: 20px; border: 1px solid var(--border); padding: 48px 44px; width: 100%; max-width: 500px; }
+    .label { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    h1 { font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .sub { font-size: 14px; color: var(--text-light); margin-bottom: 32px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+    .field input { width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; color: var(--text); background: #f8fafc; outline: none; transition: 0.2s; font-family: inherit; }
+    .field input:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px var(--accent-glow); }
+    .strength { display: flex; gap: 4px; margin-top: 7px; }
+    .bar { height: 3px; flex: 1; border-radius: 2px; background: #e2e8f0; transition: 0.3s; }
+    .check-row { display: flex; align-items: flex-start; gap: 10px; margin: 4px 0 20px; }
+    .check-row input { margin-top: 3px; accent-color: var(--accent); }
+    .check-row label { font-size: 13px; color: var(--text-light); line-height: 1.5; }
+    .check-row a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .btn { width: 100%; padding: 13px; background: var(--gradient); color: white; font-weight: 700; font-size: 15px; border: none; border-radius: 10px; cursor: pointer; font-family: inherit; }
+    .btn:hover { opacity: 0.9; }
+    .switch { text-align: center; font-size: 14px; color: var(--text-light); margin-top: 24px; }
+    .switch a { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .errors { background: #fff5f5; border: 1px solid #fecaca; border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #b91c1c; }
+    .strength-text { font-size: 12px; color: var(--text-light); margin-top: 5px; }
+  </style>
+</head>
+<body>
+<header>
+  <a href="{% url 'home' %}" class="logo">TECHZONE</a>
+  <a href="{% url 'home' %}" class="back-link"><i class="fas fa-arrow-left"></i> Bosh sahifa</a>
+</header>
+<div class="page-body">
+  <div class="card">
+    <div class="label">Yangi hisob</div>
+    <h1>Ro'yxatdan o'tish</h1>
+    <p class="sub">Bir daqiqada hisob oching</p>
+
+    {% if form.errors %}
+      <div class="errors">Iltimos, xatolarni to'g'irlang va qayta urinib ko'ring.</div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="field-row">
+        <div class="field">
+          <label>Ism</label>
+          <input type="text" name="first_name" placeholder="Sardor" required>
+        </div>
+        <div class="field">
+          <label>Familiya</label>
+          <input type="text" name="last_name" placeholder="Karimov" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="email@example.com" required>
+      </div>
+      <div class="field">
+        <label>Telefon raqami</label>
+        <input type="tel" name="phone" placeholder="+998 90 000 00 00">
+      </div>
+      <div class="field">
+        <label>Parol</label>
+        <input type="password" name="password1" id="pwd" placeholder="Kamida 8 ta belgi" required>
+        <div class="strength">
+          <div class="bar" id="b1"></div>
+          <div class="bar" id="b2"></div>
+          <div class="bar" id="b3"></div>
+          <div class="bar" id="b4"></div>
+        </div>
+        <div class="strength-text" id="strength-label">Parol kuchini ko'rsatish uchun kiriting</div>
+      </div>
+      <div class="field">
+        <label>Parolni tasdiqlang</label>
+        <input type="password" name="password2" placeholder="••••••••" required>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="agree" required>
+        <label for="agree">
+          <a href="#">Foydalanish shartlari</a> va <a href="#">Maxfiylik siyosati</a>ga roziman
+        </label>
+      </div>
+      <button type="submit" class="btn">Hisob yaratish</button>
+    </form>
+
+    <div class="switch">Allaqachon hisobingiz bormi? <a href="{% url 'login' %}">Kirish</a></div>
+  </div>
+</div>
+<script>
+  const pwd = document.getElementById('pwd');
+  const bars = [document.getElementById('b1'), document.getElementById('b2'), document.getElementById('b3'), document.getElementById('b4')];
+  const label = document.getElementById('strength-label');
+  const levels = ['Juda zaif', 'Zaif', 'O\'rtacha', 'Kuchli'];
+  const colors = ['#ef4444', '#f97316', '#eab308', '#22c55e'];
+  pwd.addEventListener('input', () => {
+    const v = pwd.value;
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[A-Z]/.test(v)) score++;
+    if (/[0-9]/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    bars.forEach((b, i) => b.style.background = i < score ? colors[score - 1] : '#e2e8f0');
+    label.textContent = v.length ? levels[score - 1] || levels[0] : 'Parol kuchini ko\'rsatish uchun kiriting';
+    label.style.color = v.length ? colors[score - 1] : '';
+  });
+</script>
+</body>
+</html>
