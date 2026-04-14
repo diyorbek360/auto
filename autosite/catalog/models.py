@@ -7,7 +7,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
+x = 2
 class Product(models.Model):
     brand = models.CharField("Бренд", max_length=100)
     name = models.CharField("Название", max_length=200)
